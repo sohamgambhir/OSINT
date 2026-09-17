@@ -1,0 +1,191 @@
+[
+  {
+    "id": "Airbase",
+    "label": "Air Bases",
+    "color": "#FF3B30",
+    "icon": "airbase",
+    "threat": "HIGH",
+    "defaultVisible": true,
+    "count": 148
+  },
+  {
+    "id": "SAM Site",
+    "label": "SAM Sites",
+    "color": "#FF9500",
+    "icon": "sam",
+    "threat": "HIGH",
+    "defaultVisible": true,
+    "count": 44
+  },
+  {
+    "id": "Msl Base  Test Site",
+    "label": "Missile Bases / Test Sites",
+    "color": "#FF2D55",
+    "icon": "missile",
+    "threat": "HIGH",
+    "defaultVisible": true,
+    "count": 1
+  },
+  {
+    "id": "TMR Camps",
+    "label": "TMR Camps",
+    "color": "#34C759",
+    "icon": "camp",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 228
+  },
+  {
+    "id": "WTC Camps",
+    "label": "WTC Camps",
+    "color": "#34C759",
+    "icon": "camp",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 33
+  },
+  {
+    "id": "XMR Camps",
+    "label": "XMR Camps",
+    "color": "#34C759",
+    "icon": "camp",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 215
+  },
+  {
+    "id": "Central Camps",
+    "label": "Central Camps",
+    "color": "#34C759",
+    "icon": "camp",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 20
+  },
+  {
+    "id": "SIGINT",
+    "label": "SIGINT Facilities",
+    "color": "#5856D6",
+    "icon": "sigint",
+    "threat": "HIGH",
+    "defaultVisible": true,
+    "count": 63
+  },
+  {
+    "id": "Svl",
+    "label": "Surveillance Sites",
+    "color": "#BF5AF2",
+    "icon": "surveillance",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 2
+  },
+  {
+    "id": "Trg Area",
+    "label": "Training Areas",
+    "color": "#30D158",
+    "icon": "training",
+    "threat": "LOW",
+    "defaultVisible": true,
+    "count": 44
+  },
+  {
+    "id": "Ammunition Storage",
+    "label": "Ammunition Storage",
+    "color": "#FFCC00",
+    "icon": "ammo",
+    "threat": "HIGH",
+    "defaultVisible": true,
+    "count": 85
+  },
+  {
+    "id": "Logistics Area",
+    "label": "Logistics Areas",
+    "color": "#FF6B35",
+    "icon": "logistics",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 38
+  },
+  {
+    "id": "FOL",
+    "label": "Forward Ops / Fuel (FOL)",
+    "color": "#FF6B35",
+    "icon": "fol",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 46
+  },
+  {
+    "id": "Power Stns",
+    "label": "Power Stations",
+    "color": "#00D4FF",
+    "icon": "power",
+    "threat": "LOW",
+    "defaultVisible": true,
+    "count": 9
+  },
+  {
+    "id": "Railway Station",
+    "label": "Railway Stations",
+    "color": "#00D4FF",
+    "icon": "rail",
+    "threat": "LOW",
+    "defaultVisible": true,
+    "count": 15
+  },
+  {
+    "id": "Railway Bridges",
+    "label": "Railway Bridges",
+    "color": "#00D4FF",
+    "icon": "bridge",
+    "threat": "LOW",
+    "defaultVisible": true,
+    "count": 1
+  },
+  {
+    "id": "Balloon",
+    "label": "Airship / Balloon Sites",
+    "color": "#64D2FF",
+    "icon": "balloon",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 1
+  },
+  {
+    "id": "Dams",
+    "label": "Dams / Hydro",
+    "color": "#00D4FF",
+    "icon": "dam",
+    "threat": "LOW",
+    "defaultVisible": true,
+    "count": 8
+  },
+  {
+    "id": "Satellite",
+    "label": "Satellite Facilities",
+    "color": "#64D2FF",
+    "icon": "satellite",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 5
+  },
+  {
+    "id": "Mfr",
+    "label": "Manufacturing",
+    "color": "#FF453A",
+    "icon": "factory",
+    "threat": "HIGH",
+    "defaultVisible": true,
+    "count": 2
+  },
+  {
+    "id": "TunnelsDugout",
+    "label": "Underground Facilities / Tunnels",
+    "color": "#8E8E93",
+    "icon": "tunnel",
+    "threat": "MEDIUM",
+    "defaultVisible": true,
+    "count": 19
+  }
+]

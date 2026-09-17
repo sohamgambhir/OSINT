@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>OSINT GEOSPATIAL INTELLIGENCE — WTC Infrastructure</title>
+<meta name="description" content="Satellite intelligence dashboard — Western Theater Command infrastructure" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Leaflet core -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<!-- Leaflet.markercluster -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" />
+
+<link rel="stylesheet" href="css/main.css" />
+<link rel="stylesheet" href="css/sidebar.css" />
+<link rel="stylesheet" href="css/popup.css" />
+<link rel="stylesheet" href="css/hud.css" />
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛰️</text></svg>">
+</head>
+<body>
+
+<!-- ============ CLASSIFICATION BANNER ============ -->
+<div class="classification-banner" id="classification-banner">
+  <span class="classification-text">FOR OFFICIAL USE ONLY</span>
+  <span class="classification-sep">//</span>
+  <span class="classification-text">OSINT-DERIVED — NOT VERIFIED INTELLIGENCE</span>
+</div>
+
+<!-- ============ TOP HUD BAR ============ -->
+<header class="hud-bar" id="hud-bar">
+  <div class="hud-left">
+    <div class="app-brand">
+      <span class="brand-icon">◈</span>
+      <div class="brand-text">
+        <span class="brand-title">OSINT GEOSPATIAL INTEL</span>
+        <span class="brand-subtitle">WTC INFRASTRUCTURE — LIVE TRACKING</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hud-center" id="hud-stats">
+    <div class="hud-stat">
+      <span class="hud-stat-label">FEATURES IN VIEW</span>
+      <span class="hud-stat-value" id="stat-in-view">0</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-stat-label">TOTAL TRACKED</span>
+      <span class="hud-stat-value" id="stat-total">0</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-stat-label">ACTIVE LAYERS</span>
+      <span class="hud-stat-value" id="stat-layers">0/0</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-stat-label">ZOOM</span>
+      <span class="hud-stat-value" id="stat-zoom">5</span>
+    </div>
+  </div>
+
+  <div class="hud-right">
+    <div class="hud-clock" id="hud-clock">
+      <span id="hud-date">--</span>
+      <span id="hud-time">--:--:--</span>
+      <span id="hud-tz">UTC</span>
+    </div>
+    <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" title="Toggle Sidebar" aria-label="Toggle sidebar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ============ MAIN LAYOUT ============ -->
+<div class="app-shell">
+
+  <!-- ===== LEFT SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+
+      <!-- Search -->
+      <div class="sidebar-section search-section">
+        <div class="search-box">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="text" id="search-input" placeholder="Search location, formation, equipment…" autocomplete="off" />
+          <button id="search-clear" class="search-clear" title="Clear search" aria-label="Clear search">&times;</button>
+        </div>
+        <div id="search-results" class="search-results"></div>
+      </div>
+
+      <!-- Statistics -->
+      <div class="sidebar-section stats-section">
+        <div class="stat-tile">
+          <span class="stat-tile-value" id="stat-total-features">0</span>
+          <span class="stat-tile-label">Total Assets</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile-value" id="stat-visible-features">0</span>
+          <span class="stat-tile-label">Visible</span>
+        </div>
+        <div class="stat-tile">
+          <span class="stat-tile-value" id="stat-categories">0</span>
+          <span class="stat-tile-label">Categories</span>
+        </div>
+      </div>
+
+      <!-- View Mode -->
+      <div class="sidebar-section">
+        <div class="section-heading">Display Mode</div>
+        <div class="mode-toggle" id="mode-toggle">
+          <button class="mode-btn active" data-mode="pins">PINS</button>
+          <button class="mode-btn" data-mode="heatmap">HEATMAP</button>
+        </div>
+        <div class="basemap-toggle" id="basemap-toggle">
+          <button class="mode-btn active" data-basemap="satellite">SATELLITE</button>
+          <button class="mode-btn" data-basemap="dark">DARK</button>
+        </div>
+        <label class="checkbox-row" id="labels-toggle-row">
+          <input type="checkbox" id="labels-toggle" checked />
+          <span>Boundaries &amp; Place Labels</span>
+        </label>
+        <label class="checkbox-row" id="tunnels-toggle-row">
+          <input type="checkbox" id="tunnels-toggle" checked />
+          <span>Tunnel Portal Lines</span>
+        </label>
+      </div>
+
+      <!-- Threat filter -->
+      <div class="sidebar-section">
+        <div class="section-heading">Threat Level</div>
+        <div class="threat-filter" id="threat-filter">
+          <label class="threat-chip threat-high active" data-threat="HIGH"><span class="dot"></span>HIGH</label>
+          <label class="threat-chip threat-medium active" data-threat="MEDIUM"><span class="dot"></span>MEDIUM</label>
+          <label class="threat-chip threat-low active" data-threat="LOW"><span class="dot"></span>LOW</label>
+        </div>
+      </div>
+
+      <!-- Layers -->
+      <div class="sidebar-section layers-section">
+        <div class="section-heading">
+          <span>Intelligence Layers</span>
+          <div class="layer-actions">
+            <button id="layers-select-all" class="link-btn">ALL</button>
+            <span class="sep">/</span>
+            <button id="layers-select-none" class="link-btn">NONE</button>
+          </div>
+        </div>
+        <div class="layer-list" id="layer-list"><!-- populated by sidebar.js --></div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- ===== MAP AREA ===== -->
+  <main class="map-area">
+    <div id="map"></div>
+
+    <!-- Coordinate HUD -->
+    <div class="coord-hud" id="coord-hud">
+      <span class="coord-label">CURSOR</span>
+      <span id="coord-value">--°N  --°E</span>
+    </div>
+
+    <!-- Minimap -->
+    <div class="minimap-frame" id="minimap-frame">
+      <div id="minimap"></div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">INITIALIZING SATELLITE FEED…</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== INTELLIGENCE CARD (right slide-in) ===== -->
+  <aside class="intel-card" id="intel-card">
+    <div class="intel-card-inner" id="intel-card-inner"><!-- populated by popup.js --></div>
+  </aside>
+
+</div>
+
+<!-- Leaflet + plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+
+<script src="js/config.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/app.js"></script>
+<script src="js/layers.js"></script>
+<script src="js/popup.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/hud.js"></script>
+</body>
+</html>
